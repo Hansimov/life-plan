@@ -2,18 +2,23 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import pandas as pd
-# df['日期'] = pd.to_datetime(df['日期'])
-df = pd.read_csv('data.csv')
-# x = pd.Series(['2022-04-23'])
-# x = pd.to_datetime(x)
-# print(x)
-df['日期'] = pd.to_datetime(df['日期'])
-# print(df['日期'])
-# print(df)
-print(df.info())
+
+df = pd.read_csv("data.csv")
+cols_rename_dict = {
+    "日期" : "date"     ,
+    "编程" : "code"     ,
+    "交易" : "trade"    ,
+    "健身" : "bodybuild",
+    "读书" : "read"     ,
+}
+df.rename(columns=cols_rename_dict, inplace=True)
+df["date"] = pd.to_datetime(df["date"])
 
 fig, ax = plt.subplots()
-ax.add_patch(Rectangle((1, 1), 1, 1))
-ax.add_patch(Rectangle((2, 2), 1, 1))
+ax.set_aspect(1)
+
+for idx, row in df.iterrows():
+    weekday = row["date"].isoweekday()
+    ax.add_patch(Rectangle((2 * idx, weekday), 1, 1, color="blue"))
 ax.plot()
 # plt.show()
