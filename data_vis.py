@@ -36,12 +36,14 @@ class CalendarPlotter:
     def plot(self):
         fig, ax = plt.subplots()
         ax.set_aspect(self.aspect)
+
+        # Plot daily blocks
         row0 = self.df.iloc[[0]]
         wk_offset = row0["date"][0].isoweekday() - 1
         for ida, row in self.df.iterrows():
             for idb, (key, val) in enumerate(self.action_color_dict.items()):
-                rect_x_len = self.aspect
-                rect_y_len = 1
+                rect_x_len = 1
+                rect_y_len = rect_x_len / self.aspect
                 rect_x = rect_x_len * ((idb % 2) + 2.5 * ((ida + wk_offset) // 7))
                 rect_y = rect_y_len * ((idb // 2) - 2.5 * ((ida + wk_offset) % 7))
                 facecolor = val if row[key] == 1 else "white"
@@ -52,6 +54,8 @@ class CalendarPlotter:
                     edgecolor="gray",
                 )
                 ax.add_patch(rect)
+
+        # Plot legends
         handles = []
         for idb, (key, val) in enumerate(self.action_color_dict.items()):
             patch = Patch(color=val, label=self.data_parser.action_en_zh_dict[key])
@@ -59,6 +63,7 @@ class CalendarPlotter:
         plt.legend(handles=handles, bbox_to_anchor=(1.05, 1))
         ax.plot()
         # plt.show()
+        plt.savefig("calendar.png")
 
 
 calendar_plotter = CalendarPlotter()
