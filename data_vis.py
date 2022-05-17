@@ -4,6 +4,7 @@ from matplotlib.patches import Rectangle, Patch
 import pandas as pd
 
 plt.rcParams["font.sans-serif"] = ["SimHei"]
+plt.rc('axes', unicode_minus=False)
 
 
 class DataParser:
