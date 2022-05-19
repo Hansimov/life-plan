@@ -5,7 +5,12 @@
   * https://weibo.com/5615345989/Lt0otj3YJ
 * 图文精选
   * https://weibo.com/5615345989/Lt0zW218C
-
+* 為什麼你增肌慢，效果不明顯？ 95%的人是因為這幾個原因【Erik埃里克】 - YouTube
+  * https://www.youtube.com/watch?v=pFX5kKGXytg
+* 不同体型的瘦子，分别应该怎么增重？【卓叔】_哔哩哔哩_bilibili
+  * https://www.bilibili.com/video/BV12L411A7TC
+* 【卓叔】瘦子增重怎么吃，吃多少？【增重科普07】_哔哩哔哩_bilibili
+  * https://www.bilibili.com/video/BV1DA41187af
 
 # 个人训练方案
 
@@ -18,8 +23,12 @@
 
 ## 3+6：肩+腹肌
 * 肩膀中束：侧平举，3组12次（图1-5）
-  * 细节：胸部靠于60度斜板，虎口朝前
   * https://www.youtube.com/watch?v=BAzuViFRy9E
+  * https://www.youtube.com/watch?v=Lt1AsayzFUc
+    * 小重量，大次数，组间休息30秒
+    * 平常体态，挺胸，避免驼背
+    * 不要过度夹紧肩胛骨，做好沉肩即可
+    * 大臂往身体前30度，符合肩胛平面
 * 腹肌：卷腹，3组10-15次
 
 ## 5+7：背+肱三头肌
@@ -33,6 +42,14 @@
 
 ## 臀+腿
 * 臀桥：3组10次
-* 爬楼：1-15层，10趟
+* × 爬楼：1-15层，10趟
+  * 瘦子增肌更需热量，应少做有氧
 
 # 个人饮食计划
+
+## 公式
+* 一日六餐
+* 蛋白质：1.8g/kg * 45kg = 81g
+* 碳水：8g/kg * 45kg = 360g
+  * 一桶泡面：80g*55/100 = 44g
+  * https://www.zhihu.com/question/468607122
