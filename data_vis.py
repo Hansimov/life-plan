@@ -4,7 +4,7 @@ from matplotlib.patches import Rectangle, Patch
 import pandas as pd
 import datetime
 
-plt.rcParams["font.sans-serif"] = ["SimHei"]
+plt.rcParams["font.sans-serif"] = ["Microsoft Yahei"]
 plt.rc("axes", unicode_minus=False)
 
 
@@ -27,62 +27,107 @@ class CalendarPlotter:
     def __init__(self, data_filename="data.csv"):
         self.aspect = 8
         self.action_color_dict = {
-            "code": "#0000FF",
-            "trade": "#00FF00",
-            "body": "#FF00FF",
-            "read": "#FFFF00",
+            "code": "#0000FF",  # blue
+            "trade": "#00FF00",  # green
+            "body": "#FF00FF",  # pink
+            "read": "#FFFF00",  # yellow
         }
+        self.weekday_zh_list = ["日", "一", "二", "三", "四", "五", "六"]
         self.data_parser = DataParser(data_filename)
         self.df = self.data_parser.df
 
     def plot(self):
-        fig, ax = plt.subplots(dpi=200)
-        ax.set_aspect(self.aspect)
+        fig, self.ax = plt.subplots(dpi=200)
+        self.ax.set_aspect(self.aspect)
+        self.ax.axis("off")
 
-        # Plot daily blocks
         row0 = self.df.iloc[[0]]
-        wk_offset = row0["date"][0].isoweekday() - 1
-        rect_x_len = 1
-        rect_y_len = rect_x_len / self.aspect
+        self.wk_offset = row0["date"][0].isoweekday()
+        self.rect_x_len = 1
+        self.rect_y_len = self.rect_x_len / self.aspect
+        self.rect_y_gap = 2.5
         for ida, row in self.df.iterrows():
-            for idb, (action, color) in enumerate(self.action_color_dict.items()):
-                # Plot color blocks
-                rect_x = rect_x_len * ((idb % 2) + 2.5 * ((ida + wk_offset) // 7))
-                rect_y = rect_y_len * ((idb // 2) - 2.5 * ((ida + wk_offset) % 7))
-                facecolor = color if row[action] == 1 else "white"
-                rect = Rectangle(
-                    (rect_x, rect_y),
-                    *(rect_x_len, rect_y_len),
-                    facecolor=facecolor,
-                    edgecolor="gray",
-                )
-                ax.add_patch(rect)
+            rect_x, rect_y = self.plot_daily_rects(ida, row)
+            self.plot_day_month_texts(row, rect_x, rect_y)
+        self.plot_week_texts()
+        self.plot_legends()
 
-            # Plot day and month texts
-            date = row["date"]
-            day_text_x = rect_x + rect_x_len / 10
-            day_text_y = rect_y + rect_y_len / 8
-            date_text_str = f"{date.day:02}"
-            plt.text(day_text_x, day_text_y, date_text_str)
+        self.ax.plot()
+        # plt.show()
+        plt.savefig("calendar.png")
 
-            if date.isoweekday() == 7:
-                month_text_x = rect_x
-                month_text_y = rect_y - rect_y_len * 2
-                month_text_str = f"{date.month}"
-                # month_text_str = date.strftime("%b")
-                plt.text(month_text_x, month_text_y, month_text_str, ha="center")
+    def plot_daily_rects(self, ida, row):
+        for idb, (action, color) in enumerate(self.action_color_dict.items()):
+            rect_x = self.rect_x_len * (
+                (idb % 2) + self.rect_y_gap * ((ida + self.wk_offset) // 7)
+            )
+            rect_y = self.rect_y_len * (
+                (idb // 2) - self.rect_y_gap * ((ida + self.wk_offset) % 7)
+            )
+            facecolor = color if row[action] == 1 else "white"
+            rect = Rectangle(
+                (rect_x, rect_y),
+                *(self.rect_x_len, self.rect_y_len),
+                facecolor=facecolor,
+                edgecolor="gray",
+            )
+            self.ax.add_patch(rect)
+        return rect_x, rect_y
 
-        # Plot legends
+    def plot_day_month_texts(self, row, rect_x, rect_y):
+        # Plot day texts
+        date = row["date"]
+        day_text_x = rect_x + self.rect_x_len / 10
+        day_text_y = rect_y + self.rect_y_len / 8
+        date_text_str = f"{date.day:01}"
+        plt.text(day_text_x, day_text_y, date_text_str, fontsize="small")
+
+        # Plot month texts
+        if date.isoweekday() == 6:
+            month_text_x = rect_x
+            month_text_y = rect_y - self.rect_y_len * 1.5
+            month_text_str = f"{date.month}"
+            # month_text_str = date.strftime("%b")
+            one_week_delta = datetime.timedelta(days=7)
+            if date.month == (date - one_week_delta).month:
+                color, fontweight = "black", "normal"
+            else:
+                color, fontweight = "blue", "bold"
+            plt.text(
+                month_text_x,
+                month_text_y,
+                month_text_str,
+                va="top",
+                ha="center",
+                color=color,
+                fontweight=fontweight,
+            )
+
+    def plot_week_texts(self):
+        for i in range(7):
+            weekday_text_y = self.rect_y_len * (-self.rect_y_gap * i + 1)
+            weekday_text_x = self.rect_x_len * (-1.0)
+            weekday_text_str = self.weekday_zh_list[i]
+            if i not in [0, 6]:
+                color, fontweight = "black", "normal"
+            else:
+                color, fontweight = "blue", "bold"
+            plt.text(
+                weekday_text_x,
+                weekday_text_y,
+                weekday_text_str,
+                va="center",
+                ha="right",
+                color=color,
+                fontweight=fontweight,
+            )
+
+    def plot_legends(self):
         handles = []
         for idb, (action, color) in enumerate(self.action_color_dict.items()):
             patch = Patch(color=color, label=self.data_parser.action_en_zh_dict[action])
             handles.append(patch)
         plt.legend(handles=handles, bbox_to_anchor=(1.05, 1))
-
-        ax.axis("off")
-        ax.plot()
-        # plt.show()
-        plt.savefig("calendar.png")
 
 
 calendar_plotter = CalendarPlotter()
