@@ -46,9 +46,12 @@ class CalendarPlotter:
         self.rect_x_len = 1
         self.rect_y_len = self.rect_x_len / self.aspect
         self.rect_y_gap = 2.5
+        self.ax_bottom = self.rect_y_len * (-self.rect_y_gap) * 6
         for ida, row in self.df.iterrows():
             rect_x, rect_y = self.plot_daily_rects(ida, row)
-            self.plot_day_month_texts(row, rect_x, rect_y)
+            self.plot_day_month_texts(
+                row["date"], rect_x, rect_y, is_last_day=(ida == self.df.shape[0] - 1)
+            )
         self.plot_week_texts()
         self.plot_legends()
 
@@ -72,21 +75,21 @@ class CalendarPlotter:
                 edgecolor="gray",
             )
             self.ax.add_patch(rect)
-        self.ax_x_right = rect_x + self.rect_x_len * 2
+        self.ax_right = rect_x + self.rect_x_len * 2
         return rect_x, rect_y
 
-    def plot_day_month_texts(self, row, rect_x, rect_y):
+    def plot_day_month_texts(self, date, rect_x, rect_y, is_last_day=False):
         # Plot day texts
-        date = row["date"]
         day_text_x = rect_x + self.rect_x_len / 10
         day_text_y = rect_y + self.rect_y_len / 8
         date_text_str = f"{date.day:01}"
         plt.text(day_text_x, day_text_y, date_text_str, fontsize="small")
 
         # Plot month texts
-        if date.isoweekday() == 6:
+        if date.isoweekday() == 6 or is_last_day:
             month_text_x = rect_x
-            month_text_y = rect_y - self.rect_y_len * 1.5
+            # month_text_y = rect_y - self.rect_y_len * 1.5
+            month_text_y = self.ax_bottom - self.rect_y_len * 0.5
             month_text_str = f"{date.month}"
             # month_text_str = date.strftime("%b")
             one_week_delta = datetime.timedelta(days=7)
@@ -108,7 +111,7 @@ class CalendarPlotter:
         for i in range(7):
             weekday_text_y = self.rect_y_len * (-self.rect_y_gap * i + 1)
             # weekday_text_x = self.rect_x_len * (-1.0)
-            weekday_text_x = self.ax_x_right
+            weekday_text_x = self.ax_right
             weekday_text_str = self.weekday_zh_list[i]
             if i not in [0, 6]:
                 color, fontweight = "black", "normal"
