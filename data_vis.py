@@ -27,9 +27,9 @@ class CalendarPlotter:
     def __init__(self, data_filename="data.csv"):
         self.aspect = 8
         self.action_color_dict = {
-            "code": "#0000FF",  # blue
-            "trade": "#00FF00",  # green
-            "body": "#FF00FF",  # pink
+            "code": "#00BBDD",  # light blue
+            "trade": "#00EE00",  # green
+            "body": "#FF00EE",  # pink
             "read": "#FFFF00",  # yellow
         }
         self.weekday_zh_list = ["日", "一", "二", "三", "四", "五", "六"]
@@ -72,6 +72,7 @@ class CalendarPlotter:
                 edgecolor="gray",
             )
             self.ax.add_patch(rect)
+        self.ax_x_right = rect_x + self.rect_x_len * 2
         return rect_x, rect_y
 
     def plot_day_month_texts(self, row, rect_x, rect_y):
@@ -106,18 +107,20 @@ class CalendarPlotter:
     def plot_week_texts(self):
         for i in range(7):
             weekday_text_y = self.rect_y_len * (-self.rect_y_gap * i + 1)
-            weekday_text_x = self.rect_x_len * (-1.0)
+            # weekday_text_x = self.rect_x_len * (-1.0)
+            weekday_text_x = self.ax_x_right
             weekday_text_str = self.weekday_zh_list[i]
             if i not in [0, 6]:
                 color, fontweight = "black", "normal"
             else:
                 color, fontweight = "blue", "bold"
+
             plt.text(
                 weekday_text_x,
                 weekday_text_y,
                 weekday_text_str,
                 va="center",
-                ha="right",
+                ha="left",
                 color=color,
                 fontweight=fontweight,
             )
@@ -127,7 +130,7 @@ class CalendarPlotter:
         for idb, (action, color) in enumerate(self.action_color_dict.items()):
             patch = Patch(color=color, label=self.data_parser.action_en_zh_dict[action])
             handles.append(patch)
-        plt.legend(handles=handles, bbox_to_anchor=(1.05, 1))
+        plt.legend(handles=handles, bbox_to_anchor=(0.0, 0.98))
 
 
 calendar_plotter = CalendarPlotter()
