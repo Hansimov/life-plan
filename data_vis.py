@@ -46,7 +46,7 @@ class CalendarPlotter:
         self.rect_x_len = 1
         self.rect_y_len = self.rect_x_len / self.aspect
         self.rect_y_gap = 2.5
-        self.ax_bottom = self.rect_y_len * (-self.rect_y_gap) * 6
+        self.calendar_bottom = self.rect_y_len * (-self.rect_y_gap) * 6
         for ida, row in self.df.iterrows():
             rect_x, rect_y = self.plot_daily_rects(ida, row)
             self.plot_day_month_texts(
@@ -54,6 +54,7 @@ class CalendarPlotter:
             )
         self.plot_week_texts()
         self.plot_legends()
+        self.plot_bars()
 
         self.ax.plot()
         # plt.show()
@@ -75,7 +76,7 @@ class CalendarPlotter:
                 edgecolor="gray",
             )
             self.ax.add_patch(rect)
-        self.ax_right = rect_x + self.rect_x_len * 2
+        self.calendar_right = rect_x + self.rect_x_len * 2
         return rect_x, rect_y
 
     def plot_day_month_texts(self, date, rect_x, rect_y, is_last_day=False):
@@ -89,7 +90,7 @@ class CalendarPlotter:
         if date.isoweekday() == 6 or is_last_day:
             month_text_x = rect_x
             # month_text_y = rect_y - self.rect_y_len * 1.5
-            month_text_y = self.ax_bottom - self.rect_y_len * 0.5
+            month_text_y = self.calendar_bottom - self.rect_y_len * 0.5
             month_text_str = f"{date.month}"
             # month_text_str = date.strftime("%b")
             one_week_delta = datetime.timedelta(days=7)
@@ -111,7 +112,7 @@ class CalendarPlotter:
         for i in range(7):
             weekday_text_y = self.rect_y_len * (-self.rect_y_gap * i + 1)
             # weekday_text_x = self.rect_x_len * (-1.0)
-            weekday_text_x = self.ax_right
+            weekday_text_x = self.calendar_right
             weekday_text_str = self.weekday_zh_list[i]
             if i not in [0, 6]:
                 color, fontweight = "black", "normal"
@@ -134,6 +135,30 @@ class CalendarPlotter:
             patch = Patch(color=color, label=self.data_parser.action_en_zh_dict[action])
             handles.append(patch)
         plt.legend(handles=handles, bbox_to_anchor=(0.0, 0.98))
+
+    def plot_bars(self):
+        self.bar_width = self.calendar_right / self.df.shape[0]
+        self.bar_height = self.rect_y_len
+        for idb, (action, color) in enumerate(self.action_color_dict.items()):
+            bar_y = self.calendar_bottom - (4 + 2 * idb) * self.rect_y_len
+            for ida, row in self.df.iterrows():
+                bar_x = ida * self.bar_width
+                rect = Rectangle(
+                    (bar_x, bar_y),
+                    *(self.bar_width, self.bar_height),
+                    facecolor=color,
+                    edgecolor=None,
+                )
+                if row[action]:
+                    self.ax.add_patch(rect)
+            plt.text(
+                -self.bar_width,
+                bar_y + self.bar_height / 2,
+                self.data_parser.action_en_zh_dict[action],
+                va="center",
+                ha="right",
+                fontsize=8,
+            )
 
 
 calendar_plotter = CalendarPlotter()
