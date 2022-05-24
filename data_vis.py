@@ -35,6 +35,7 @@ class CalendarPlotter:
         self.weekday_zh_list = ["日", "一", "二", "三", "四", "五", "六"]
         self.data_parser = DataParser(data_filename)
         self.df = self.data_parser.df
+        self.fontsize = 8
 
     def plot(self):
         fig, self.ax = plt.subplots(dpi=200)
@@ -50,7 +51,10 @@ class CalendarPlotter:
         for ida, row in self.df.iterrows():
             rect_x, rect_y = self.plot_daily_rects(ida, row)
             self.plot_day_month_texts(
-                row["date"], rect_x, rect_y, is_last_day=(ida == self.df.shape[0] - 1)
+                row["date"],
+                rect_x,
+                rect_y,
+                is_last_day=(ida == self.df.shape[0] - 1),
             )
         self.plot_week_texts()
         self.plot_legends()
@@ -84,7 +88,7 @@ class CalendarPlotter:
         day_text_x = rect_x + self.rect_x_len / 10
         day_text_y = rect_y + self.rect_y_len / 8
         date_text_str = f"{date.day:01}"
-        plt.text(day_text_x, day_text_y, date_text_str, fontsize="small")
+        plt.text(day_text_x, day_text_y, date_text_str, fontsize=self.fontsize / 1.6)
 
         # Plot month texts
         if date.isoweekday() == 6 or is_last_day:
@@ -105,6 +109,7 @@ class CalendarPlotter:
                 va="top",
                 ha="center",
                 color=color,
+                fontsize=self.fontsize,
                 fontweight=fontweight,
             )
 
@@ -126,6 +131,7 @@ class CalendarPlotter:
                 va="center",
                 ha="left",
                 color=color,
+                fontsize=self.fontsize,
                 fontweight=fontweight,
             )
 
@@ -134,30 +140,40 @@ class CalendarPlotter:
         for idb, (action, color) in enumerate(self.action_color_dict.items()):
             patch = Patch(color=color, label=self.data_parser.action_en_zh_dict[action])
             handles.append(patch)
-        plt.legend(handles=handles, bbox_to_anchor=(0.0, 0.98))
+        plt.legend(handles=handles, bbox_to_anchor=(0.0, 0.98), fontsize=self.fontsize)
 
     def plot_bars(self):
         self.bar_width = self.calendar_right / self.df.shape[0]
         self.bar_height = self.rect_y_len
         for idb, (action, color) in enumerate(self.action_color_dict.items()):
             bar_y = self.calendar_bottom - (4 + 2 * idb) * self.rect_y_len
+
             for ida, row in self.df.iterrows():
                 bar_x = ida * self.bar_width
                 rect = Rectangle(
                     (bar_x, bar_y),
                     *(self.bar_width, self.bar_height),
                     facecolor=color,
-                    edgecolor=None,
+                    edgecolor="none",
                 )
                 if row[action]:
                     self.ax.add_patch(rect)
+
+            outline_rect = Rectangle(
+                (0, bar_y),
+                *(self.calendar_right, self.bar_height),
+                facecolor="none",
+                edgecolor="gray",
+            )
+            self.ax.add_patch(outline_rect)
+
             plt.text(
                 -self.bar_width,
                 bar_y + self.bar_height / 2,
                 self.data_parser.action_en_zh_dict[action],
                 va="center",
                 ha="right",
-                fontsize=8,
+                fontsize=self.fontsize,
             )
 
 
