@@ -169,7 +169,7 @@ class CalendarPlotter:
 
             plt.text(
                 -self.bar_width,
-                bar_y + self.bar_height / 2,
+                bar_y + self.bar_height / 2 - 0.01,
                 self.data_parser.action_en_zh_dict[action],
                 va="center",
                 ha="right",
