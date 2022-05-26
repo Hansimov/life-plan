@@ -15,8 +15,11 @@
 
 ## 1+4：胸肌+肱二头肌
 * 上胸：上斜哑铃推举，4组8次（图6-10）
-  * 细节：背部靠于45度斜板，保持核心稳定（勿反弓腰部），大臂内收（勿向上推）、
-* 肱二头肌：弯举，5组10次
+  * 细节：背部靠于45度斜板，保持核心稳定（勿反弓腰部），大臂内收（勿向上推）
+  * https://zhuanlan.zhihu.com/p/166363748
+  * https://zhuanlan.zhihu.com/p/55197143
+* 宽距俯卧撑，3组12次
+* 肱二头肌：弯举，4组10次
   * https://www.bilibili.com/video/BV1Ba411i7pv
   * https://www.youtube.com/watch?v=B0ba4oUcWug
 
