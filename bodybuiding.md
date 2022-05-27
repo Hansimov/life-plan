@@ -29,7 +29,7 @@
   * https://zhuanlan.zhihu.com/p/64083376
   * https://www.zhihu.com/question/37712072/answer/73189832
 * 背：正手引体向上，3组5次
-* 肱三头肌：哑铃俯身臂屈伸，3组5次
+* 肱三头肌：哑铃俯身臂屈伸，4组8次
   * https://zhuanlan.zhihu.com/p/40610317
 
 ## 3+6：肩+腹肌
