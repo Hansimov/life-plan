@@ -43,13 +43,13 @@
 * 腹肌：卷腹，3组15次
 
 ## 臀+腿
-* 臀桥：3组10次
-* × 爬楼：1-15层，10趟
-  * 瘦子增肌更需热量，应少做有氧
-* 保加利亚深蹲
+* 保加利亚深蹲，5组10次
+  * https://www.youtube.com/watch?v=UJZuci1fchw
 * 保加利亚酒杯深蹲
 * 单腿蹲
-* 单腿臀桥
+* （单腿）臀桥
+  * https://www.youtube.com/watch?v=EUXiLYCwf7I
+  * https://www.youtube.com/watch?v=joVxpJfxtZ0
 * 单腿臀冲
 * 弹力带螃蟹步
 * 单腿开合
