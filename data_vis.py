@@ -97,8 +97,12 @@ class CalendarPlotter:
             month_text_y = self.calendar_bottom - self.rect_y_len * 0.5
             month_text_str = f"{date.month}"
             # month_text_str = date.strftime("%b")
-            one_week_delta = datetime.timedelta(days=7)
-            if date.month == (date - one_week_delta).month:
+            if is_last_day:
+                days_delta = (date.isoweekday() + 1) % 7
+            else:
+                days_delta = 7
+            previ_month_days_delta = datetime.timedelta(days=days_delta)
+            if date.month == (date - previ_month_days_delta).month:
                 color, fontweight = "black", "normal"
             else:
                 color, fontweight = "blue", "bold"
