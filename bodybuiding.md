@@ -13,7 +13,7 @@
 
 # 个人训练方案
 
-## 1+4：胸肌+肱二头肌
+## 1+4：胸肌+肱二头肌+肩
 * 上胸：上斜哑铃推举，4组8次（图6-10）
   * 细节：背部靠于45度斜板，保持核心稳定（勿反弓腰部），大臂内收（勿向上推）
   * https://zhuanlan.zhihu.com/p/166363748
@@ -22,17 +22,6 @@
 * 肱二头肌：弯举，4组10次
   * https://www.bilibili.com/video/BV1Ba411i7pv
   * https://www.youtube.com/watch?v=B0ba4oUcWug
-
-## 2+5：背+肱三头肌
-* 上背：单臂哑铃划船，4组8次（图11-17）
-  * 细节：大重量，背部挺直，与地面水平
-  * https://zhuanlan.zhihu.com/p/64083376
-  * https://www.zhihu.com/question/37712072/answer/73189832
-* 背：正手引体向上，3组5次
-* 肱三头肌：哑铃俯身臂屈伸，4组8次
-  * https://zhuanlan.zhihu.com/p/40610317
-
-## 3+6：肩+腹肌
 * 肩膀中束：侧平举，4组12次（图1-5）
   * https://www.youtube.com/watch?v=BAzuViFRy9E
   * https://www.youtube.com/watch?v=Lt1AsayzFUc
@@ -40,6 +29,15 @@
     * 平常体态，挺胸，避免驼背
     * 不要过度夹紧肩胛骨，做好沉肩即可
     * 大臂往身体前30度，符合肩胛平面
+
+## 2+5：背+肱三头肌+腹肌
+* 上背：单臂哑铃划船，4组8次（图11-17）
+  * 细节：大重量，背部挺直，与地面水平
+  * https://zhuanlan.zhihu.com/p/64083376
+  * https://www.zhihu.com/question/37712072/answer/73189832
+* 背：正手引体向上，3组5次
+* 肱三头肌：哑铃俯身臂屈伸，4组8次
+  * https://zhuanlan.zhihu.com/p/40610317
 * 腹肌：卷腹，3组15次
 
 ## 臀+腿
