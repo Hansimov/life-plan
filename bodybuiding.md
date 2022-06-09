@@ -18,6 +18,7 @@
   * 细节：背部靠于45度斜板，保持核心稳定（勿反弓腰部），大臂内收（勿向上推）
   * https://zhuanlan.zhihu.com/p/166363748
   * https://zhuanlan.zhihu.com/p/55197143
+  * https://www.youtube.com/watch?v=QtQhZwkrbYY
 * 宽距俯卧撑，3组12次
 * 肱二头肌：弯举，4组10次
   * https://www.bilibili.com/video/BV1Ba411i7pv
