@@ -23,7 +23,7 @@
 * 肱二头肌：弯举，4组10次
   * https://www.bilibili.com/video/BV1Ba411i7pv
   * https://www.youtube.com/watch?v=B0ba4oUcWug
-* 肩膀中束：侧平举，4组12次（图1-5）
+* 肩膀中束：侧平举，4组10次（图1-5）
   * https://www.youtube.com/watch?v=BAzuViFRy9E
   * https://www.youtube.com/watch?v=Lt1AsayzFUc
     * 小重量，大次数，组间休息30秒
