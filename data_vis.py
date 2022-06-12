@@ -101,8 +101,8 @@ class CalendarPlotter:
                 days_delta = (date.isoweekday() + 1) % 7
             else:
                 days_delta = 7
-            previ_month_days_delta = datetime.timedelta(days=days_delta)
-            if date.month == (date - previ_month_days_delta).month:
+            prev_month_days_delta = datetime.timedelta(days=days_delta)
+            if date.month == (date - prev_month_days_delta).month:
                 color, fontweight = "black", "normal"
             else:
                 color, fontweight = "blue", "bold"
