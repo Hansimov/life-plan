@@ -1,0 +1,10 @@
+name: Update Calendar
+on: 
+  push:
+    paths:
+      - 'data.csv'
+      jobs:
+        run-data-vis:
+          runs-on: ubuntu-latest
+          steps:
+            - run: echo "updating calendar ..."
