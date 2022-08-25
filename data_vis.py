@@ -9,8 +9,10 @@ plt.rc("axes", unicode_minus=False)
 
 
 class DataParser:
-    def __init__(self, data_filename="data.csv"):
+    def __init__(self, data_filename="data.csv", fill=True):
         self.df = pd.read_csv(data_filename)
+        if fill:
+            self.fill_missing_days()
         self.action_zh_en_dict = {
             "日期": "date",
             "编程": "code",
@@ -21,6 +23,9 @@ class DataParser:
         self.action_en_zh_dict = dict((v, k) for k, v in self.action_zh_en_dict.items())
         self.df.rename(columns=self.action_zh_en_dict, inplace=True)
         self.df["date"] = pd.to_datetime(self.df["date"])
+
+    def fill_missing_days(self):
+        pass
 
 
 class CalendarPlotter:
@@ -33,9 +38,10 @@ class CalendarPlotter:
             "read": "#FFFF00",  # yellow
         }
         self.weekday_zh_list = ["日", "一", "二", "三", "四", "五", "六"]
-        self.data_parser = DataParser(data_filename)
+        self.data_parser = DataParser(data_filename, fill=True)
         self.df = self.data_parser.df
         self.fontsize = 8
+        self.light_gray = "#CCCCCC"
 
     def plot(self):
         fig, self.ax = plt.subplots(dpi=200)
@@ -72,7 +78,8 @@ class CalendarPlotter:
             rect_y = self.rect_y_len * (
                 (idb // 2) - self.rect_y_gap * ((ida + self.wk_offset) % 7)
             )
-            facecolor = color if row[action] == 1 else "white"
+            facecolor_dict = {1: color, 0: "white", -1: self.light_gray}
+            facecolor = facecolor_dict[row[action]]
             rect = Rectangle(
                 (rect_x, rect_y),
                 *(self.rect_x_len, self.rect_y_len),
@@ -154,14 +161,15 @@ class CalendarPlotter:
 
             for ida, row in self.df.iterrows():
                 bar_x = ida * self.bar_width
+                facecolor_dict = {1: color, 0: "white", -1: self.light_gray}
+                facecolor = facecolor_dict[row[action]]
                 rect = Rectangle(
                     (bar_x, bar_y),
                     *(self.bar_width, self.bar_height),
-                    facecolor=color,
+                    facecolor=facecolor,
                     edgecolor="none",
                 )
-                if row[action]:
-                    self.ax.add_patch(rect)
+                self.ax.add_patch(rect)
 
             outline_rect = Rectangle(
                 (0, bar_y),
