@@ -1,6 +1,7 @@
 # %%
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Patch
+import numpy as np
 import pandas as pd
 import datetime
 
@@ -11,8 +12,6 @@ plt.rc("axes", unicode_minus=False)
 class DataParser:
     def __init__(self, data_filename="data.csv", fill=True):
         self.df = pd.read_csv(data_filename)
-        if fill:
-            self.fill_missing_days()
         self.action_zh_en_dict = {
             "日期": "date",
             "编程": "code",
@@ -23,9 +22,14 @@ class DataParser:
         self.action_en_zh_dict = dict((v, k) for k, v in self.action_zh_en_dict.items())
         self.df.rename(columns=self.action_zh_en_dict, inplace=True)
         self.df["date"] = pd.to_datetime(self.df["date"])
+        if fill:
+            self.fill_missing_days()
 
     def fill_missing_days(self):
-        pass
+        # pandas.core.resample.Resampler.fillna — pandas 1.4.3 documentation
+        #   https://pandas.pydata.org/docs/reference/api/pandas.core.resample.Resampler.fillna.html
+        self.df = self.df.set_index("date").resample("1D").asfreq(fill_value=-1)
+        self.df = self.df.reset_index()
 
 
 class CalendarPlotter:
@@ -37,11 +41,11 @@ class CalendarPlotter:
             "body": "#FF00EE",  # pink
             "read": "#FFFF00",  # yellow
         }
+        self.light_gray = "#DDDDDD"
         self.weekday_zh_list = ["日", "一", "二", "三", "四", "五", "六"]
         self.data_parser = DataParser(data_filename, fill=True)
         self.df = self.data_parser.df
         self.fontsize = 8
-        self.light_gray = "#CCCCCC"
 
     def plot(self):
         fig, self.ax = plt.subplots(dpi=200)
